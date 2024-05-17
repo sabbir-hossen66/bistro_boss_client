@@ -15,9 +15,11 @@ import pic1 from '../../assets/home/01.jpg'
 import pic2 from '../../assets/home/02.jpg'
 import pic3 from '../../assets/home/03.png'
 
+
 const Slider = () => {
   return (
     <div className='my-16'>
+
       <Swiper
         effect={'coverflow'}
         grabCursor={true}

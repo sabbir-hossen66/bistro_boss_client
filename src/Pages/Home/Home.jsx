@@ -1,4 +1,5 @@
 import Banner from "../../components/Banner/Banner";
+import Category from "../../components/Category/Category";
 import Slider from "../../components/Slider/Slider";
 
 
@@ -7,6 +8,7 @@ const Home = () => {
     <div className="max-w-screen-xl mx-auto">
       <Slider></Slider>
       <Banner></Banner>
+      <Category></Category>
     </div>
   );
 };

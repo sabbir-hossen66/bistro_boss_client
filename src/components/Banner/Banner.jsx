@@ -1,21 +1,23 @@
 
-import React, { useRef, useState } from 'react';
-// Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
-
-// Import Swiper styles
 import 'swiper/css';
-
-
 import slid1 from '../../assets/home/slide1.jpg'
 import slide2 from '../../assets/home/slide2.jpg'
 import slide3 from '../../assets/home/slide3.jpg'
 import slide4 from '../../assets/home/slide4.jpg'
-import slide5 from '../../assets/home/slide5.jpg'
+
+import SectionTitle from '../SectionTitle/SectionTitle';
 
 const Banner = () => {
   return (
-    <div className='mb-6'>
+    <section className='mb-8'>
+
+      <SectionTitle
+        subHeading={"From 11 am to 10 pm"}
+        heading={'Order Onlie'}>
+
+      </SectionTitle>
+
       <Swiper
         slidesPerView={3}
         spaceBetween={30}
@@ -44,7 +46,7 @@ const Banner = () => {
         </SwiperSlide>
 
       </Swiper>
-    </div>
+    </section>
   );
 };
 
