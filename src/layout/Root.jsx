@@ -1,11 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
+import Header from '../Shared/Header';
 
 const Root = () => {
   return (
     <div>
-      <h3>kilo</h3>
+      <Header></Header>
       <Outlet></Outlet>
+
     </div>
   );
 };
