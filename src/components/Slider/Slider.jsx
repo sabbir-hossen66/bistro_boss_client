@@ -2,7 +2,7 @@
 // Import Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import './Slider.css'
+// import './Slider.css'
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
