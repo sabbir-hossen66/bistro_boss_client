@@ -31,6 +31,7 @@ const Header = () => {
               <div className="flex flex-col -mx-6 lg:flex-row lg:items-center lg:mx-8">
                 <Link to={'/'}><a className="px-3 py-2 mx-3 mt-2">Home</a></Link>
                 <Link to={'/menu'}><a className="px-3 py-2 mx-3 mt-2">menu</a></Link>
+                <Link to={'/login'}><a className="px-3 py-2 mx-3 mt-2">Login</a></Link>
 
               </div>
 
