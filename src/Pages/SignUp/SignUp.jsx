@@ -19,7 +19,7 @@ const SignUp = () => {
         <div>
           <label className="block mb-2 text-sm text-[#5D9AE5]">First Name</label>
           <input type="text" placeholder="John" {...register("name", { required: true })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-          {errors.name && <span className="text-red-500">This field is required</span>}
+          {errors.name && <span className="text-red-500">at least 20 character </span>}
         </div>
 
         <div>
@@ -29,14 +29,18 @@ const SignUp = () => {
         </div>
         <div>
           <label className="block mb-2 text-sm text-[#5D9AE5]">Email address</label>
-          <input type="email" placeholder="Enter Your Email" {...register("email", { required: true })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+          <input type="email" placeholder="Enter Your Email" {...register("email", { required: true, minLength: 6, maxLength: 20 })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
           {errors.email && <span className="text-red-500">This field is required</span>}
         </div>
 
         <div>
           <label className="block mb-2 text-sm text-[#5D9AE5]">Password</label>
-          <input type="password" placeholder="Enter your password" {...register("password", { required: true })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-          {errors.password && <span className="text-red-500">This field is required</span>}
+          <input type="password" placeholder="Enter your password"
+            {...register("password", {
+              required: true,
+              pattern: /^(?=.*[A-Z]).{8,}$/
+            })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+          {errors.password && <span className="text-red-500">give me 6 character and one letter is capital</span>}
         </div>
 
         <div>
