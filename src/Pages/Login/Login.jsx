@@ -1,15 +1,41 @@
-// import { Button } from "components/ui/button"
-
+import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from "react-router-dom";
+import './Login.css'
+
 
 const Login = () => {
+  const [disabled, setDisabled] = useState(true)
+  const [seeButton, setSeeButton] = useState(false)
+  const captchaRef = useRef(null)
+
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, [])
+
+  const handleLogin = e => {
+    e.preventDefault()
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+    console.log(email, password);
+  }
+
+  const handleValidateCaptcha = () => {
+    const result = captchaRef.current.value;
+    if (validateCaptcha(result)) {
+      setDisabled(false)
+    }
+    else {
+      setDisabled(true)
+    }
+  }
 
   return (
     <div>
 
-      <form className="w-full max-w-md mx-auto">
-
-
+      <form onSubmit={handleLogin} className="w-full max-w-md mx-auto">
         <h1 className="mt-3 text-2xl font-semibold text-[#3B82F6] capitalize sm:text-3xl ">
           sign In</h1>
 
@@ -31,20 +57,37 @@ const Login = () => {
             </svg>
           </span>
 
-          <input type="password" name="password" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg  dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" required />
+          <input type="password" name="password" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="Password" required />
+        </div>
+        {/* captcha */}
+        <div>
+          <label className='label'>
+            <LoadCanvasTemplate />
+          </label>
+          <input type="captcha" ref={captchaRef} name="captcha" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="type captcha" required />
+          <button onClick={handleValidateCaptcha} className="w-full btn btn-xs btn-outline btn-success">validate</button>
         </div>
 
         <div className="mt-6">
-          <button className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-            Sign in
-          </button>
+
+          {
+            disabled ? <div>
+              <button>Please type captcha</button>
+            </div>
+              :
+              <div>
+                <button disabled={disabled} className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                  Sign in
+                </button>
+              </div>
+          }
 
           <p className="mt-4 text-center text-gray-600 dark:text-gray-400">or sign in with</p>
 
 
 
           <div className="flex flex-col w-full px-6 py-3 gap-y-5">
-            <button className="bg-white flex items-center text-white  font-bold justify-center gap-x-3 text-sm sm:text-base  dark:border-gray-700 hover:bg-blue-500 rounded-lg  duration-300 transition-colors border px-8 py-2.5">
+            <button className="googleSign bg-white flex items-center text-white  font-bold justify-center gap-x-3 text-sm sm:text-base  dark:border-gray-700 hover:bg-blue-500 rounded-lg  duration-300 transition-colors border px-8 py-2.5">
               <svg className="w-5 h-5 sm:h-6 sm:w-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g clipPath="url(#clip0_3033_94454)">
                   <path d="M23.766 12.2764C23.766 11.4607 23.6999 10.6406 23.5588 9.83807H12.24V14.4591H18.7217C18.4528 15.9494 17.5885 17.2678 16.323 18.1056V21.1039H20.19C22.4608 19.0139 23.766 15.9274 23.766 12.2764Z" fill="#4285F4" />
