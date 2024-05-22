@@ -1,15 +1,16 @@
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import './Login.css'
 import { AuthContext } from '@/Provider/AuthProvider';
-
+import Swal from 'sweetalert2'
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true)
-  const captchaRef = useRef(null)
   const { signIn } = useContext(AuthContext)
-
+  let navigate = useNavigate();
+  let location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -24,11 +25,29 @@ const Login = () => {
       .then(result => {
         const user = result.user
         console.log(user);
+        navigate(from, { replace: true });
+        Swal.fire({
+          title: "Custom animation with Animate.css",
+          showClass: {
+            popup: `
+      animate__animated
+      animate__fadeInUp
+      animate__faster
+    `
+          },
+          hideClass: {
+            popup: `
+      animate__animated
+      animate__fadeOutDown
+      animate__faster
+    `
+          }
+        });
       })
   }
 
-  const handleValidateCaptcha = () => {
-    const result = captchaRef.current.value;
+  const handleValidateCaptcha = (e) => {
+    const result = e.target.value;
     if (validateCaptcha(result)) {
       setDisabled(false)
     }
@@ -69,13 +88,18 @@ const Login = () => {
           <label className='label'>
             <LoadCanvasTemplate />
           </label>
-          <input type="captcha" ref={captchaRef} name="captcha" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="type captcha" required />
-          <button onClick={handleValidateCaptcha} className="w-full btn btn-xs btn-outline btn-success">validate</button>
+          <input onBlur={handleValidateCaptcha} type="captcha" name="captcha" className="block w-full px-10 py-3 text-gray-700 bg-white border rounded-lg dark:border-gray-600 focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40" placeholder="type captcha" required />
+          {/* <button className="w-full btn btn-xs btn-outline btn-success">validate</button> */}
         </div>
 
         <div className="mt-6">
+          <div>
+            <button disabled={disabled} className="w-full px-6 py-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-500 rounded-lg hover:bg-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+              Sign in
+            </button>
+          </div>
 
-          {
+          {/* {
             disabled ? <div>
               <button>Please type captcha</button>
             </div>
@@ -85,7 +109,7 @@ const Login = () => {
                   Sign in
                 </button>
               </div>
-          }
+          } */}
 
           <p className="mt-4 text-center text-gray-600 dark:text-gray-400">or sign in with</p>
 

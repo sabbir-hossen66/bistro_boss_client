@@ -1,6 +1,9 @@
+import { AuthContext } from "@/Provider/AuthProvider";
+import { useContext } from "react";
 import { useForm } from "react-hook-form"
 
 const SignUp = () => {
+  const { createUser } = useContext(AuthContext)
   const {
     register,
     handleSubmit,
@@ -11,6 +14,15 @@ const SignUp = () => {
 
   const onSubmit = data => {
     console.log(data);
+    createUser(data.email, data.password)
+      .then(result => {
+        const response = result.user
+        console.log(response);
+      })
+      .catch(error => {
+        const errormessage = error.message
+        console.log(errormessage);
+      })
   }
 
   return (
@@ -29,7 +41,7 @@ const SignUp = () => {
         </div>
         <div>
           <label className="block mb-2 text-sm text-[#5D9AE5]">Email address</label>
-          <input type="email" placeholder="Enter Your Email" {...register("email", { required: true, minLength: 6, maxLength: 20 })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+          <input type="email" placeholder="Enter Your Email" {...register("email", { required: true })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
           {errors.email && <span className="text-red-500">This field is required</span>}
         </div>
 
@@ -38,9 +50,18 @@ const SignUp = () => {
           <input type="password" placeholder="Enter your password"
             {...register("password", {
               required: true,
-              pattern: /^(?=.*[A-Z]).{8,}$/
+              minLength: 6,
+              pattern: /^(?=.*[A-Z]).{6,}$/
             })} className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-lg  focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-          {errors.password && <span className="text-red-500">give me 6 character and one letter is capital</span>}
+          {errors.password?.type === "required" && (
+            <p className="text-red-600">password is required</p>
+          )}
+          {errors.password?.type === "minLength" && (
+            <p className="text-red-600">minimum 6 digits</p>
+          )}
+          {errors.password?.type === "pattern" && (
+            <p className="text-red-600">One letter is capital</p>
+          )}
         </div>
 
         <div>
