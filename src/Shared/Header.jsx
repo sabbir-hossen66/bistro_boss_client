@@ -98,12 +98,12 @@ const Header = () => {
               </div>
 
               <div className="flex items-center mt-4 lg:mt-0">
-
-                <button className="flex">
-                  <IoMdCart />
-                  <div className="badge badge-secondary">+{cart.length}</div>
-                </button>
-
+                <Link to={'/dashboard/cart'}>
+                  <button className="flex">
+                    <IoMdCart />
+                    <div className="badge badge-secondary">+{cart.length}</div>
+                  </button>
+                </Link>
                 <button
                   type="button"
                   className="flex items-center focus:outline-none"
