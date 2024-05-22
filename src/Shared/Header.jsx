@@ -2,11 +2,12 @@ import { AuthContext } from "@/Provider/AuthProvider";
 import { IoMdCart } from "react-icons/io";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import UseCart from "@/hooks/UseCart";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logOut } = useContext(AuthContext)
-  console.log(logOut);
+  const [cart] = UseCart()
 
   const handleLogOut = () => {
     logOut()
@@ -100,7 +101,7 @@ const Header = () => {
 
                 <button className="flex">
                   <IoMdCart />
-                  <div className="badge badge-secondary">+0</div>
+                  <div className="badge badge-secondary">+{cart.length}</div>
                 </button>
 
                 <button
