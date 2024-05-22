@@ -84,6 +84,7 @@ const Header = () => {
                 {
                   user ?
                     <>
+                      {/* <span>  {user?.displayName}</span> */}
                       <button onClick={handleLogOut}>Logout</button>
                     </>
                     :

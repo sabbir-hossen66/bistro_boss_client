@@ -1,23 +1,44 @@
 import { AuthContext } from "@/Provider/AuthProvider";
 import { useContext } from "react";
 import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const SignUp = () => {
-  const { createUser } = useContext(AuthContext)
+  const { createUser, updatePerson, logOut } = useContext(AuthContext)
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm()
 
-
+  const navigate = useNavigate()
   const onSubmit = data => {
-    console.log(data);
     createUser(data.email, data.password)
       .then(result => {
         const response = result.user
         console.log(response);
+        updatePerson(data.name, data.photoURL)
+          .then(() => {
+            console.log('update profileInfo');
+            reset()
+            Swal.fire({
+              title: "Sweet!",
+              text: "Modal with a custom image.",
+              imageUrl: "https://unsplash.it/400/200",
+              imageWidth: 400,
+              imageHeight: 200,
+              imageAlt: "Custom image"
+            });
+            // navigate('/login')
+            logOut()
+              .then(() => {
+                navigate('/login')
+              })
+          })
+
       })
       .catch(error => {
         const errormessage = error.message
