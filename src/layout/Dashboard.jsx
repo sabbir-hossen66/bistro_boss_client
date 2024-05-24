@@ -1,11 +1,11 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
-
+import { Link, Outlet } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
 
 const Dashboard = () => {
   return (
     <div className="flex">
       <div>
-        <aside className="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-black text-white ">
+        <aside className="flex flex-col h-full px-4 py-8 overflow-y-auto bg-black text-white ">
           <a href="#">
             <img className="w-auto h-6 sm:h-7" src="https://merakiui.com/images/logo.svg" alt="" />
           </a>
@@ -79,7 +79,16 @@ const Dashboard = () => {
 
                 <span className="mx-4 font-medium">Settings</span>
               </a>
+
+              <hr className="my-6 border-gray-200 dark:border-gray-600" />
+              <Link to={'/'}>
+                <div className="flex  items-center gap-2">
+                  <FaHome />
+                  <p>Home</p>
+                </div>
+              </Link>
             </nav>
+
 
             <a href="#" className="flex items-center px-4 -mx-2">
               <img className="object-cover mx-2 rounded-full h-9 w-9" src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80" alt="avatar" />
@@ -89,7 +98,7 @@ const Dashboard = () => {
         </aside>
       </div>
 
-      <div className="flex-cols-1">
+      <div className="w-[80%]">
         <Outlet></Outlet>
       </div>
 
