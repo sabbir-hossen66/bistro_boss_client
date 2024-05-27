@@ -11,6 +11,7 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from "@/layout/Dashboard";
 import Cart from "@/Pages/Dashboard/Cart/Cart";
 import Bookings from "@/Pages/Dashboard/Bookings/Bookings";
+import AllUsers from "@/Pages/AllUsers/AllUsers";
 
 
 export const router = createBrowserRouter([
@@ -52,6 +53,12 @@ export const router = createBrowserRouter([
       {
         path: "bookings",
         element: <Bookings></Bookings>,
+      },
+
+      /* these are admin routes */
+      {
+        path: "allUsers",
+        element: <AllUsers></AllUsers>,
       },
     ],
   }

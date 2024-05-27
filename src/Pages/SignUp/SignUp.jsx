@@ -1,10 +1,13 @@
 import { AuthContext } from "@/Provider/AuthProvider";
+import SocialLogin from "@/components/SocialLogin/SocialLogin";
+import useAxiosPublic from "@/hooks/useAxiosPublic";
 import { useContext } from "react";
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic()
   const { createUser, updatePerson, logOut } = useContext(AuthContext)
   const {
     register,
@@ -22,20 +25,31 @@ const SignUp = () => {
         console.log(response);
         updatePerson(data.name, data.photoURL)
           .then(() => {
-            console.log('update profileInfo');
-            reset()
-            Swal.fire({
-              title: "Sweet!",
-              text: "Modal with a custom image.",
-              imageUrl: "https://unsplash.it/400/200",
-              imageWidth: 400,
-              imageHeight: 200,
-              imageAlt: "Custom image"
-            });
-            // navigate('/login')
+            //  create user entry in database
+            const userInfo = {
+              name: data.name,
+              email: data.email
+            }
+            axiosPublic.post('/users', userInfo)
+              .then(res => {
+                if (res.data.insertedId) {
+                  console.log('user added');
+                  reset()
+                  Swal.fire({
+                    title: "Sweet!",
+                    text: "Modal with a custom image.",
+                    imageUrl: "https://unsplash.it/400/200",
+                    imageWidth: 400,
+                    imageHeight: 200,
+                    imageAlt: "Custom image"
+                  });
+                }
+              })
+
+            // navigate('/')
             logOut()
               .then(() => {
-                navigate('/login')
+                navigate('/')
               })
           })
 
@@ -106,7 +120,8 @@ const SignUp = () => {
               clipRule="evenodd" />
           </svg> */}
         </button>
-
+        <p>or</p>
+        <SocialLogin></SocialLogin>
       </form>
     </div>
   );
